@@ -1,0 +1,20 @@
+---
+layout: post
+title: 'Linux Tutorial - Apache Web Login Authentication:'
+date: '2011-07-24T23:30:00.000-04:00'
+author: Xianjun
+tags:
+- linux
+- Aparche
+modified_time: '2011-08-10T16:12:27.121-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-1178677919157048415
+blogger_orig_url: http://onetipperday.blogspot.com/2011/07/linux-tutorial-apache-web-login.html
+---
+
+<div dir="ltr" style="text-align: left;" trbidi="on"><a href="http://www.yolinux.com/TUTORIALS/LinuxTutorialApacheAddingLoginSiteProtection.html#ALTAUTH">Linux Tutorial - Apache Web Login Authentication:</a>: <br /><div><br /></div><div><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; font-family: helvetica, arial, sans-serif; font-size: medium;"></span><br /><table border="0" cellpadding="2" cellspacing="0"><tbody>
+ <tr bgcolor="#b0b0b0"><td style="color: black; font-family: helvetica, arial, sans-serif;"><b><big>Password protection by a single login:</big></b></td></tr>
+ </tbody></table><br /><h3><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; font-family: helvetica, arial, sans-serif; font-size: medium;">Password files:</span></h3><ol><li><span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; font-family: helvetica, arial, sans-serif; font-size: medium;">Create the directory you want to password protect (example: membersonly)</span></li>
+ <span class="Apple-style-span" style="-webkit-border-horizontal-spacing: 1px; -webkit-border-vertical-spacing: 1px; font-family: helvetica, arial, sans-serif; font-size: medium;">
+ <li>Create a file <tt>/home/<i>domain</i>/public_html/membersonly/.htaccess</tt> in that director that looks something like this: <br /><dl><dd><table bgcolor="#000000" border="1" cellpadding="4" cellspacing="1"><tbody>
+ <tr bgcolor="#c0c0c0"><td style="color: black; font-family: helvetica, arial, sans-serif;"><pre>AuthName "<i>Add your login message here.</i>"     &nbsp;</pre><pre>AuthType Basic     &nbsp;</pre><pre>AuthUserFile /home/<i>domain</i>/public_html/membersonly/.htpasswd     &nbsp;</pre><pre>AuthGroupFile /dev/null     &nbsp;</pre><pre>require user <i>name-of-user</i>                     </pre></td></tr>
+ </tbody></table></dd></dl>In this case the "name-of-user" is the login name you wish to use for accessing the web site.</li><br /><br /><br /><li>Create (or clobber if it already exists) the password file /home/<i>domain</i>/public_html/membersonly/.htpasswd using the program <tt>htpasswd</tt>: <br /><pre>htpasswd -c .htpasswd <i>name-of-user</i></pre></li><br /><br /></span></ol></div></div>

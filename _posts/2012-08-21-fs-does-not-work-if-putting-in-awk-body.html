@@ -1,0 +1,13 @@
+---
+layout: post
+title: FS does not work if putting in awk body
+date: '2012-08-21T11:23:00.006-04:00'
+author: Xianjun Dong
+tags:
+- awk
+modified_time: '2012-08-21T11:23:47.587-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-8115413165136917530
+blogger_orig_url: http://onetipperday.blogspot.com/2012/08/fs-does-not-work-if-putting-in-awk-body.html
+---
+
+Just noticed this by double-checking the&nbsp;weird result I got:<br /><br />For example , you have a text&nbsp;<a href="http://zlab.umassmed.edu/~dongx/public/FS.tab" target="_blank">file</a> with some empty columns in lines, like:<br /><br /><br /><span style="font-family: Courier New, Courier, monospace;">JUNCTION.100681<span style="color: #cccccc;">___</span>1<span style="color: #cccccc;">___</span>6<span style="color: #cccccc;">___</span>1<span style="color: #cccccc;">___</span>6<span style="background-color: white;"><span style="color: #cccccc;">___</span></span>JUNCTION.100681<span style="color: #cccccc;">___ ___</span>17<span style="color: #cccccc;">___ ___</span>12</span><br /><br />(which is tab-separated, and the&nbsp;7th and 9th&nbsp;columns are empty)<br /><div><br /></div><br /><br /><span style="font-family: Courier New, Courier, monospace;">awk '{FS="\t";OFS="\t";&nbsp;print $1,$2+$7,$3+$8,$4+$9,$5+$10}'</span> will output:<br /><br /><span style="font-family: Courier New, Courier, monospace;">JUNCTION.100681<span style="color: #cccccc;">___</span>18<span style="color: #cccccc;">___</span>18<span style="color: #cccccc;">___</span>1<span style="color: #cccccc;">___</span>6</span><br /><br />It takes $7 as 17 and $8 as 12, which is wrong. The right output should be:<br /><br /><span style="font-family: Courier New, Courier, monospace;">JUNCTION.100681<span style="color: #cccccc;">___</span>1<span style="color: #cccccc;">___</span>23<span style="color: #cccccc;">___</span>1<span style="color: #cccccc;">___</span>18</span><br /><br />It seems FS="\t" does not work properly in the body of AWK.<br /><br />The right solution is:<br /><br /><br /><span style="font-family: Courier New, Courier, monospace;">awk 'BEGIN{FS="\t"}{OFS="\t";print $1,$2+$7,$3+$8,$4+$9,$5+$10}'</span><br /><br />or<br /><br /><span style="font-family: Courier New, Courier, monospace;">awk -F"\t" '{OFS="\t";print $1,$2+$7,$3+$8,$4+$9,$5+$10}'</span><br /><br />or<br /><br /><br /><br /><span style="font-family: Courier New, Courier, monospace;">awk -v FS="\t" '{OFS="\t";print $1,$2+$7,$3+$8,$4+$9,$5+$10}'</span><br /><br />I am not sure if this is a bug.<br />btw, I am using&nbsp;GNU Awk 3.1.5.

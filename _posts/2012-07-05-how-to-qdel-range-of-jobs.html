@@ -1,0 +1,15 @@
+---
+layout: post
+title: how to qdel a range of jobs
+date: '2012-07-05T10:34:00.002-04:00'
+author: Xianjun Dong
+tags:
+- seq
+- unix
+- qdel
+modified_time: '2012-07-05T10:34:34.871-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-2405479960155892262
+blogger_orig_url: http://onetipperday.blogspot.com/2012/07/how-to-qdel-range-of-jobs.html
+---
+
+<br />For example, I want to kill jobs with ids ranging from&nbsp;<span style="background-color: white;">7823111 to&nbsp;</span><span style="background-color: white;">7823118. One way to do it is of course to list all IDs after qdel, such as&nbsp;</span><br /><span style="background-color: white;"><br /></span><br /><span style="background-color: white;">$ qdel&nbsp;</span><span style="background-color: white;">7823111&nbsp;</span><span style="background-color: white;">7823112&nbsp;</span><span style="background-color: white;">7823113 7823114 7823115 7823116 7823117 7823118</span><br /><span style="background-color: white;"><br /></span><br /><span style="background-color: white;">You can also do this in an elegant way, using seq command to generate the sequence number:</span><br /><br /><br />$ echo `seq -f "%.0f" 7823111 7823118`<br />7823111 7823112 7823113 7823114 7823115 7823116 7823117 7823118<br /><br /><br />Note that if you are using job array (-t) to control jobs, then it's easier to kill list of jobs in the array. Here is what "man qdel" says:<br /><br />-t array_range<div>The array_range argument is an integer id or a range of integers. Multiple ids or id ranges can be combined in a comma delimted list. Examples: -t 1-100 or -t 1,10,50-100<br /><br /><br /></div>

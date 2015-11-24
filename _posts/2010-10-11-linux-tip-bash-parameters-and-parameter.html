@@ -1,0 +1,16 @@
+---
+layout: post
+title: 'Linux tip: Bash parameters and parameter expansions'
+date: '2010-10-11T15:35:00.000-04:00'
+author: Xianjun
+tags:
+- linux
+- replace
+- bash
+- substitution
+modified_time: '2012-04-19T22:34:35.265-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-6545577066419195213
+blogger_orig_url: http://onetipperday.blogspot.com/2010/10/linux-tip-bash-parameters-and-parameter.html
+---
+
+<a href="http://www.ibm.com/developerworks/library/l-bash-parameters.html?ca=drs-">Linux tip: Bash parameters and parameter expansions</a>: "Table 2. Shell expansion pattern matchingExpansion Purpose<br />${PARAMETER#WORD} The shell expands WORD as in filename expansion and removes the shortest matching pattern, if any, from the beginning of the expanded value of PARAMETER. Using '@' or '$' results in the pattern removal for each parameter in the list.<br />${PARAMETER##WORD} Results in removal of the longest matching pattern from the beginning rather than the shortest.<br />${PARAMETER%WORD} The shell expands WORD as in filename expansion and removes the shortest matching pattern, if any, from the end of the expanded value of PARAMETER. Using '@' or '$' results in the pattern removal for each parameter in the list.<br />${PARAMETER%%WORD} Results in removal of the longest matching pattern from the end rather than the shortest.<br />${PARAMETER/PATTERN/STRING} The shell expands PATTERN as in filename expansion and replaces the longest matching pattern, if any, in the expanded value of PARAMETER. To match patterns at the beginning of the expanded value of PARAMETER, prefix PATTERN with # or prefix it with % if the match should be done at the end. If STRING is empty, the trailing / may be omitted and the matches are deleted. Using '@' or '$' results in the pattern substitution for each parameter in the list.<br />${PARAMETER//PATTERN/STRING} Performs the substitution for all matches instead of just the first.<br /><br />Listing 11 shows some basic usage of the pattern matching expansions.<br /><br />Listing 11. Pattern matching examples<br /><br />[ian@pinguino ~]$ x='a1 b1 c2 d2'<br />[ian@pinguino ~]$ echo ${x#*1}<br />b1 c2 d2<br />[ian@pinguino ~]$ echo ${x##*1}<br />c2 d2<br />[ian@pinguino ~]$ echo ${x%1*}<br />a1 b<br />[ian@pinguino ~]$ echo ${x%%1*}<br />a<br />[ian@pinguino ~]$ echo ${x/1/3}<br />a3 b1 c2 d2<br />[ian@pinguino ~]$ echo ${x//1/3}<br />a3 b3 c2 d2<br />[ian@pinguino ~]$ echo ${x//?1/z3}<br />z3 z3 c2 d2<br /><br /><br />- Sent using Google Toolbar"

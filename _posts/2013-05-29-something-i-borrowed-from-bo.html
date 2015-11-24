@@ -1,0 +1,15 @@
+---
+layout: post
+title: something I learned from Bo
+date: '2013-05-29T19:09:00.000-04:00'
+author: Xianjun Dong
+tags:
+- parafly
+- bash
+- parallel computing
+modified_time: '2013-05-29T20:54:15.872-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-4637526400868213982
+blogger_orig_url: http://onetipperday.blogspot.com/2013/05/something-i-borrowed-from-bo.html
+---
+
+Here are some shinning tips in his smallRNA pipeline:<br /><br />1.&nbsp;parallel single-thread commands using <a href="http://parafly.sourceforge.net/">parafly</a>.<br /><br />Parafly is one useful program in the Trinity package (a smart RNAseq assembly program). Here is example of how to use it:<br /><br /><span style="font-family: Courier New, Courier, monospace;">echo "mycommand1 &gt; output1"&nbsp;&gt; &nbsp;$paraFile</span><br /><span style="font-family: Courier New, Courier, monospace;">echo "mycommand2 &gt; output2"&nbsp;&gt;&gt; &nbsp;$paraFile</span><br /><span style="font-family: Courier New, Courier, monospace;">echo "mycommand3 &gt; output3"&nbsp;&gt;&gt; &nbsp;$paraFile</span><br /><span style="font-family: Courier New, Courier, monospace;">...</span><br /><span style="font-family: Courier New, Courier, monospace;">ParaFly -c $paraFile -CPU $CPU</span><br /><br />2. resuming pipeline by tracking the status of each step<br /><br /><span style="font-family: Courier New, Courier, monospace;">[ ! -f .status.${STEP}.stepname&nbsp;] &amp;&amp; \</span><br /><span style="font-family: Courier New, Courier, monospace;"><span class="Apple-tab-span" style="white-space: pre;"> </span>mycommand1&nbsp;&amp;&amp; \</span><br /><span style="font-family: Courier New, Courier, monospace;"><span class="Apple-tab-span" style="white-space: pre;"> </span>mycommand2 &amp;&amp; \</span><br /><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; mycommand3 &amp;&amp; \</span><br /><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; touch .status.${STEP}.stepname&nbsp;</span><br /><span style="font-family: Courier New, Courier, monospace;">STEP=$((STEP+1))</span><br /><br />Using a step number and a status file to record the success of each step. Only if all commands are successfully run, a new status file will be generated. This ideal was also used in Trinity.

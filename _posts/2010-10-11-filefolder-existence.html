@@ -1,0 +1,13 @@
+---
+layout: post
+title: file/folder existence
+date: '2010-10-11T13:52:00.000-04:00'
+author: Xianjun
+tags:
+- bash
+modified_time: '2010-10-11T14:00:20.632-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-6193309342612657205
+blogger_orig_url: http://onetipperday.blogspot.com/2010/10/filefolder-existence.html
+---
+
+General syntax in BASH shell is: <p><strong>[  parameter  FILE ]</strong><br />OR<br /><strong>test  parameter  FILE</strong></p> <p>Where parameter can be any one of the following:</p> <ul><li>-e: Returns true value if file exists</li><li>-f: Return true value if file exists and regular file</li><li>-r: Return true value if file exists and is readable</li><li>-w: Return true value if file exists and is writable</li><li>-x: Return true value if file exists and is executable</li><li>-d:  Return true value if exists and is a <span style="font-weight: bold;">directory</span></li></ul>For example,<br /><br />Find out if file /etc/passwd file exists or not:<br /><code>$ [ -f /etc/passwd ] &amp;&amp; echo "File exists" || echo "File  does not exists"<br /><br /># Make the directory for the job ID you are running if it does not exist<br />[ -d $HOME/scratch/jobid_$JOB_ID ] || mkdir -p $HOME/scratch/jobid_$JOB_ID<br /><br /></code>You can use conditional expressions in a shell script: <pre class="bash"><span style="color: rgb(128, 128, 128); font-style: italic;">#!/bin/bash</span><br /><span style="color: rgb(0, 120, 0);">FILE=</span>$<span style="color: rgb(0, 0, 0);">1</span><br /><br /><span style="color: rgb(0, 0, 0); font-weight: bold;">if</span> <span style="color: rgb(122, 8, 116); font-weight: bold;">[</span> -f <span style="color: rgb(0, 120, 0);">$FILE</span> <span style="color: rgb(122, 8, 116); font-weight: bold;">]</span>;<br /><span style="color: rgb(0, 0, 0); font-weight: bold;">then</span><br />  <span style="color: rgb(122, 8, 116); font-weight: bold;">echo</span> <span style="color: rgb(255, 0, 0);">"File $FILE exists"</span><br /><span style="color: rgb(0, 0, 0); font-weight: bold;">else</span><br />  <span style="color: rgb(122, 8, 116); font-weight: bold;">echo</span> <span style="color: rgb(255, 0, 0);">"File $FILE does not exists"</span><br /><span style="color: rgb(0, 0, 0); font-weight: bold;">fi</span><br /> </pre>See if a directory exists or not with NOT operator:<br /><strong>[ ! -d directory ]</strong><br />OR<br /><strong>! test directory</strong>

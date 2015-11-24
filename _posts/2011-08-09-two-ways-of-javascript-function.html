@@ -1,0 +1,29 @@
+---
+layout: post
+title: Two ways of javascript function declaration
+date: '2011-08-09T22:40:00.000-04:00'
+author: Xianjun
+tags:
+- Javascript
+modified_time: '2011-08-09T22:40:29.248-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-5183568373852852532
+blogger_orig_url: http://onetipperday.blogspot.com/2011/08/two-ways-of-javascript-function.html
+---
+
+1. The first way uses a function name, like:<br><br /><script class="brush: javascript" type="syntaxhighlighter">
+ <![CDATA[
+ function add(a, b) 
+ {                     
+   return a+b;
+ }                     
+ alert(add(1,2));        // produces 3
+ ]]>
+ </script><br />2. The second way assigns a function without name to a variable, for example:<br><br /><script class="brush: javascript" type="syntaxhighlighter">
+ <![CDATA[
+ var add=function(a, b) 
+ {                     
+   return a+b;
+ }                     
+ alert(add(1,2));        // produces 3
+ ]]>
+ </script><br /><br />Here are more details:<br />http://stackoverflow.com/questions/336859/javascript-var-functionname-function-vs-function-functionname<br /><br />

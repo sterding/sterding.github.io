@@ -1,0 +1,13 @@
+---
+layout: post
+title: An efficient way to do dataset intersection
+date: '2011-07-27T12:33:00.000-04:00'
+author: Xianjun
+tags:
+- R
+modified_time: '2011-07-27T12:41:01.315-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-4917335818789099968
+blogger_orig_url: http://onetipperday.blogspot.com/2011/07/efficient-way-to-do-dataset.html
+---
+
+The main message is to use "match" to get index of needed rows and then get the rows by the index, instead of using the row names to select, which is much slower. Here is example:<br /><br /><script class="brush: bash" type="syntaxhighlighter"><![CDATA[ histdata =unique(histdata[,c(-1, -3)]) # This step is slow histdata=histdata[match(unique(histdata[,2]), histdata[,2]),c(-1, -3)] ]]></script><br />In example above, we know that the same values of column 2nd have same values of columns from 4th to the end. So, instead of doing unique on whole matrix, getting the unique of column 2nd and then getting the index of unique ones by match. Match(a,b) only return the index of first occurrence of a in b. For example<br /><script class="brush: bash" type="syntaxhighlighter"><![CDATA[ > a=c(1,3,2,4) > b=c(0:10) > match(a,b) [1] 2 4 3 5 > a=c(1,3,2,4) > b=rep(c(0:10), 2) > match(a,b) [1] 2 4 3 5 ]]></script><br /><br />This tips also help in intersecting two big dataframes. For example, <br /><script class="brush: bash" type="syntaxhighlighter"><![CDATA[ itsid=intersect(rownames(RNAseq1), rownames(histdata)) # solution 1 -- very slow RNAseq0 = RNAseq1[itsid, ] histdata0 = histdata[itsid, ] # solution 2 -- much faster RNAseq0 = RNAseq1[match(itsid, rownames(RNAseq1)),] histdata0 = histdata[match(itsid, rownames(histdata)), ] ]]></script>

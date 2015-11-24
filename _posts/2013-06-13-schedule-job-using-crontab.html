@@ -1,0 +1,15 @@
+---
+layout: post
+title: schedule job using crontab
+date: '2013-06-13T10:14:00.002-04:00'
+author: Xianjun Dong
+tags:
+- linux
+- crontab
+- unix
+modified_time: '2013-06-13T10:16:46.107-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-3086663097494355822
+blogger_orig_url: http://onetipperday.blogspot.com/2013/06/schedule-job-using-crontab.html
+---
+
+Most of you may already know it.<br /><br />In terminal, type "crontab -e" you will enter edit mode to edit the crontab file, which has format as below:<br /><br />0 0 * * * rm ~/scratch/.*.bam<br />0 0 * * 2,5 find ~/scratch/mouse* -exec touch {} \;<br /><br />It's like Vim. After finishing the editing, type ":wq" to save/quit.<br /><br />The 5th column is to set day of the action, e.g. 2,5 means every Tuesday and Friday. Get more detail by 'man crontab'.<br /><div><br /></div>

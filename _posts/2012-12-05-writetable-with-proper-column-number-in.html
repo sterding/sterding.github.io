@@ -1,0 +1,14 @@
+---
+layout: post
+title: write.table with proper column number in the header
+date: '2012-12-05T11:16:00.000-05:00'
+author: Xianjun Dong
+tags:
+- write.table
+- R
+modified_time: '2012-12-05T11:16:28.256-05:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-1871052392932668818
+blogger_orig_url: http://onetipperday.blogspot.com/2012/12/writetable-with-proper-column-number-in.html
+---
+
+<br />Did you notice that the file generated from write.table() in R has missed a tab (\t) in the top-left corner, when row.names=T (by default)?<br /><br />I found the solution here:<br />http://stackoverflow.com/questions/2478352/write-table-in-r-screws-up-header-when-has-rownames<br /><br /><span style="font-family: Courier New, Courier, monospace;"><b>write.table("filename.xls", sep="\t",&nbsp;<code style="background-color: white;"><span style="color: red;">col.names = NA</span></code><span style="background-color: white;">,&nbsp;</span><code style="background-color: white;">row.names = TRUE)</code></b></span><br /><br /><span style="background-color: white;">Actually, the <a href="http://stat.ethz.ch/R-manual/R-devel/library/utils/html/write.table.html" target="_blank">R document</a> has stated it clearly:</span><br /><blockquote class="tr_bq"><span style="background-color: white;">By default there is no column name for a column of row names. If&nbsp;</span><code style="background-color: white;">col.names = NA</code><span style="background-color: white;">&nbsp;and&nbsp;</span><code style="background-color: white;">row.names = TRUE</code><span style="background-color: white;">&nbsp;a blank column name is added, which is the convention used for CSV files to be read by spreadsheets.</span></blockquote>

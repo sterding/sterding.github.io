@@ -1,0 +1,13 @@
+---
+layout: post
+title: how RNAseq quantification tools deal with multi-mapping reads?
+date: '2013-03-07T18:14:00.001-05:00'
+author: Xianjun Dong
+tags:
+- RNAseq
+modified_time: '2013-03-07T18:18:33.261-05:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-2559227034321201493
+blogger_orig_url: http://onetipperday.blogspot.com/2013/03/how-rnaseq-quantification-tools-deal.html
+---
+
+Just to give an overview of how the commonly used RNAseq tools deal with multiple-mapping reads.<br /><br />1. Cufflinks (http://cufflinks.cbcb.umd.edu/howitworks.html#hmul)<br />By default, Cufflinks will uniformly divide each multi-mapped read to all of the positions it maps to. In other words, a read mapping to 10 positions will count as 10% of a read at each position. If multi-mapped read correction is enabled (-u/--multi-read-correct), Cufflinks will improve its estimation in a 'rescue' manner. That&nbsp;is, Cufflinks will first calculate initial abundance estimates for all transcripts using the uniform dividing scheme. Cufflinks will then re-estimate the abundances dividing each multi-mapped read probabilistically based on the initial abundance estimation of the genes it maps to, the inferred fragment length, and fragment bias (if bias correction is enabled).<div><br /></div><div>2. HTSeq-count (http://www-huber.embl.de/users/anders/HTSeq/doc/count.html)</div>HTSeq-count can be quite conservative in the sense that it discards reads that cannot be unambiguously be assigned to a gene. This can cause values to be lower than reported by other tools. (This is done on purpose: For differential expression analysis, you need to discount ambiguous reads to avoid that differential signal on one gene shows up in another one that overlaps.) (http://seqanswers.com/forums/showthread.php?t=9129) &nbsp;Note that, HTSeq-count also reports&nbsp;<span style="font-family: Courier New, Courier, monospace;">alignment_not_unique</span>: reads with more than one reported alignment. These reads are recognized from the NH optional SAM field tag. (If the aligner does not set this field, multiply aligned reads will be counted multiple times.)<br /><br />3. RSEM (http://www.biomedcentral.com/1471-2105/12/323)<br />It's like the above Cufflinks rescue model, but using EM method to estimate. It also provides a way to generate normalized or weighted bigwig. <br /><div><br /></div><div>4. bedtools multicov</div><div>bedtools gives you raw hits which includes every 1 hit for every intersection of every alignment with any features in the GTF no matter how many times it aligned or how many features it hit. So, you have to deal with the&nbsp;apportion yourself, either&nbsp;uniformly&nbsp;or probabilistically.</div>

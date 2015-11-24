@@ -1,0 +1,16 @@
+---
+layout: post
+title: Confusing dbSNP ID
+date: '2014-03-11T11:01:00.000-04:00'
+author: Xianjun Dong
+tags:
+- dbSNP
+- gencode
+- ensembl
+- ID
+modified_time: '2014-03-11T11:53:32.530-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-2020976588254989100
+blogger_orig_url: http://onetipperday.blogspot.com/2014/03/confusing-dbsnp-id.html
+---
+
+There have been enough confusion in ID or naming system in the popular biological databases. I mentioned one such example in <a href="http://onetipperday.blogspot.com/2013/08/the-same-gene-name-but-different.html">an earlier post</a>, where two genes (on totally different chromosomes) use the same symbol and the same gene has different Ensembl Gene ID. Other confusions include the Entrez ID vs. gene symbol vs. Ensembl ID. People who do GO analysis using tools like DAVID must have painful experience on this (btw, I don't understand why most GO analysis tools convert to Entrez ID at the end).<br /><br />And now, I got another example of confusing ID system in biology or bioinformatics.<br /><br />You expect each SNP should have their unique ID in the dbSNP database, right? But they are not. Look at this example:<br /><br /><div class="p1"><span style="font-family: Courier New, Courier, monospace;">chr1&nbsp; &nbsp; 13837 &nbsp; 13838 &nbsp; - &nbsp; &nbsp; &nbsp;rs7164031, rs79531918</span></div><div class="p1"><span style="font-family: Courier New, Courier, monospace;">chr1&nbsp; &nbsp; 13837 &nbsp; 13838 &nbsp; + &nbsp; &nbsp; rs200683566, rs28391190, rs28428499, rs71252448, rs79817774</span></div><div class="p1"><br /></div><div class="p1">At the same location, multiple SNPs ID are assigned, for both strands.&nbsp;</div><div class="p1"><br /></div><div class="p1">Here is what I got from NCBI User service for the explanation:</div><div class="p1"><br /></div><div class="p1">This is expected for many reasons:</div><div class="p1">- short probes could have multiple mapping locations on the genome</div><div class="p1">- certain genes could have duplicate/pseudogene/paralogs</div><div class="p1">- variations found in repeat regions would be difficult to map to a unique&nbsp;</div><div class="p1">location</div><div class="p1"><br /></div><div class="p1">An rsID represents a cluster of reported variations submitted to dbSNP.</div><div class="p1">In ideal situation, they can be mapped to a unique location in the genome.&nbsp;</div><div class="p1"></div><div class="p1">There are cases where such unique mapping is NOT attainable.</div><div class="p1"><br /></div><div class="p1">But I am still not clear of how a cluster of variants are defined. [UPDATE to add]</div><div class="p1"><br />p.s. code snip to merge SNPs with the same location into single line:<br /><span style="font-family: Courier New, Courier, monospace;">grep single snp137.bed | sort -k1,1 -k2,2n -k6,6 | bedtools groupby -g 1,2,3,6 -c 4 -o collapse</span></div>

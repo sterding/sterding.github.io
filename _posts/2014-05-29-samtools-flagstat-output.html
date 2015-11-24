@@ -1,0 +1,16 @@
+---
+layout: post
+title: samtools flagstat won't output the number of reads mapped
+date: '2014-05-29T17:49:00.000-04:00'
+author: Xianjun Dong
+tags:
+- next-generation sequencing
+- flagstat
+- Tophat
+- samtools
+modified_time: '2014-05-29T17:50:16.959-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-5056102791920787486
+blogger_orig_url: http://onetipperday.blogspot.com/2014/05/samtools-flagstat-output.html
+---
+
+I have been using&nbsp;<span style="font-family: Courier New, Courier, monospace;"><b>samtools flagstat</b></span> to get statistics summary of my BAM/SAM file, like many tutorial suggested (e.g.&nbsp;<a href="http://davetang.org/wiki/tiki-index.php?page=SAMTools#Simple_stats_using_SAMTools_flagstat">Dave Tang's note</a>).<br /><br />But then I noticed that <span style="font-family: Courier New, Courier, monospace;"><b>flagstat</b></span> reports the number of mapping (or alignments/hits, whatever you like to call), but not the number of reads mapped. This can be very different if your alignment contains multiple mappers (and this is especially true if you use default setting or without setting "<span style="font-family: Courier New, Courier, monospace;"><b>-g 1</b></span>" in <span style="font-family: Courier New, Courier, monospace;"><b>Tophat</b></span>). To get the number of reads mapped (e.g. in order to get mappability), you can use the following command:<br /><br /><span style="font-family: Courier New, Courier, monospace;"><b>samtools view -cF 0x100 accepted_hits.bam</b></span><br /><br /><b>Note</b>: Even with multiple mappers, only one hit has flag of <span style="font-family: Courier New, Courier, monospace;"><b>0x100</b></span> in the output SAM file. I've already explained this in <a href="http://onetipperday.blogspot.com/2012/09/report-secondary-alignments-in-tophat.html">one of my previous posts</a>.

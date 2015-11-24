@@ -1,0 +1,16 @@
+---
+layout: post
+title: Trimmed mean and median in AWK
+date: '2014-04-15T16:14:00.000-04:00'
+author: Xianjun Dong
+tags:
+- median
+- UCSC
+- awk
+- trimmed mean
+modified_time: '2015-10-14T16:34:25.596-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-2542507949393859242
+blogger_orig_url: http://onetipperday.blogspot.com/2014/04/trimmed-mean-and-median-in-awk.html
+---
+
+This can be easily done in R, but sometime you want to get it in scripting language like awk or perl in order to process the big data line by line. <br /><br />Here is the code snip:<br /><br /><span style="font-family: Courier New, Courier, monospace;"># for median</span><br /><span style="color: #999999; font-family: Courier New, Courier, monospace;"># Note: thanks to&nbsp;anonymous&nbsp;reply below, put c, j in arguments to define that they are local variables.</span><br /><div><span style="font-family: Courier New, Courier, monospace;">function median(v, <span style="color: #999999;">c, j</span>)&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">{&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; c=asort(v,j);&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; if (c % 2) return j[(c+1)/2];&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; else return (j[c/2+1]+j[c/2])/2;&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">}</span></div><div><span style="font-family: Courier New, Courier, monospace;"><br /></span></div><div><span style="font-family: Courier New, Courier, monospace;"># for trimmed mean (where p is the percentage of data to be trimmed)</span><br /><span style="font-family: Courier New, Courier, monospace;">function trimmedMean(v, p</span><span style="font-family: 'Courier New', Courier, monospace;">, c, j</span><span style="font-family: 'Courier New', Courier, monospace;">)&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">{&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; c=asort(v,j);&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; a=int(c*p);</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; for(i=a+1;i&lt;=(c-a);i++) s+=j[i];</span></div><div><span style="font-family: Courier New, Courier, monospace;">&nbsp; &nbsp; return s/(c-2*a);&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">} </span></div><div>To use it, for example if we want to generate a merged bigwig track for a list of samples, we can take median value of all samples at each genomic position, here is it:</div><div><br /></div><div><span style="font-family: Courier New, Courier, monospace;">unionBedGraphs -i `ls *normalized.bedGraph` | awk 'function median(v) {c=asort(v,j); if (c % 2) return j[(c+1)/2]; else return (j[c/2+1]+j[c/2])/2.0; } {OFS="\t"; n=1; for(i=4;i&lt;=NF;i++) S[n++]=$i; print $1,$2,$3, median(S)}' &gt; AllSamples.median.normalized.bedGraph</span><br /><span style="font-family: Courier New, Courier, monospace;">bedGraphToBigWig&nbsp;AllSamples.median.normalized.bedGraph ChromInfo.txt&nbsp;AllSamples.median.normalized.bw</span></div>

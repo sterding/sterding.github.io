@@ -1,0 +1,18 @@
+---
+layout: post
+title: self-organizing map in R
+date: '2012-07-19T14:44:00.002-04:00'
+author: Xianjun Dong
+tags:
+- self-organizing map
+- machine learning
+- SOM
+- clustering
+- R
+modified_time: '2012-08-21T11:34:13.158-04:00'
+thumbnail: http://1.bp.blogspot.com/-zUGxKlJJX0I/UAhUWkA0lnI/AAAAAAAAATk/6BcueH1qu5Q/s72-c/clustering.SOM.RNAseq.png
+blogger_id: tag:blogger.com,1999:blog-12445049.post-5730547539669986274
+blogger_orig_url: http://onetipperday.blogspot.com/2012/07/self-organizing-map-in-r.html
+---
+
+<div class="separator" style="clear: both; text-align: center;"><a href="http://1.bp.blogspot.com/-zUGxKlJJX0I/UAhUWkA0lnI/AAAAAAAAATk/6BcueH1qu5Q/s1600/clustering.SOM.RNAseq.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="640" src="http://1.bp.blogspot.com/-zUGxKlJJX0I/UAhUWkA0lnI/AAAAAAAAATk/6BcueH1qu5Q/s640/clustering.SOM.RNAseq.png" width="640" /></a></div><div class="separator" style="clear: both; text-align: left;">This is my first SOM figure :)</div><div class="separator" style="clear: both; text-align: left;"><br /></div><div class="separator" style="clear: both; text-align: left;">Thanks to the <a href="http://www.stat.ucl.ac.be/ISdidactique/Rhelp/library/som/html/som.html" target="_blank">som</a> package and example code from&nbsp;<span style="background-color: white;">Jun Yan. Here is my code for the figure:</span></div><div class="separator" style="clear: both; text-align: left;"><span style="background-color: white;"><br /></span></div><div class="separator" style="clear: both; text-align: left;"><span style="background-color: white;"></span></div><div class="separator" style="clear: both;">require(som)</div><div class="separator" style="clear: both;"><span style="background-color: white;">rpkm &lt;- Tx_rpkm[, -c(1:4)]</span></div><div class="separator" style="clear: both;">rpkm.f &lt;- filtering(rpkm, lt=10, ut=30000, mmr=2, mmd=10)</div><div class="separator" style="clear: both;"># rpkm.f=log(rpkm.f+0.1) # this doesn't really change much of the result</div><div class="separator" style="clear: both;">rpkm.f.n &lt;- normalize(rpkm.f)</div><div class="separator" style="clear: both;"><span style="background-color: white;">foo &lt;- som(rpkm.f.n, xdim=5, ydim=5, topol="rect", neigh="bubble")</span></div><div class="separator" style="clear: both;">png("../results/clustering.SOM.RNAseq.png",width=800, height=800)</div><div class="separator" style="clear: both;">plot(foo,yadj=0.15, main="Expression profiles obtained by self-organizing map (SOM) clustering \nof individual mRNA transcript throughout the time-course", xlab="Stage: D13 - D14 - D15 - D16 - D17 - D18")</div><div class="separator" style="clear: both;">dev.off()</div><div class="separator" style="clear: both;"><br /></div><div class="separator" style="clear: both;">I am still not very clear how to choose the proper xdim and ydim. Also, what's the color code for the bar mean? &nbsp;Hope anyone know SOM could leave comment here. Or, I will read article myself :)</div><div class="separator" style="clear: both;"><br /></div><div class="separator" style="clear: both;">Is the normalization necessary?</div>

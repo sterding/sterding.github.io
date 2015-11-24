@@ -1,0 +1,14 @@
+---
+layout: post
+title: "--report-secondary-alignments in Tophat is nothing with 0x100 SAM flag of
+  SAM output"
+date: '2012-09-18T22:32:00.001-04:00'
+author: Xianjun Dong
+tags:
+- Tophat
+modified_time: '2013-12-03T17:05:57.408-05:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-1253300936831746334
+blogger_orig_url: http://onetipperday.blogspot.com/2012/09/report-secondary-alignments-in-tophat.html
+---
+
+--report-secondary-alignments option in Tophat is off by default, which means only best or primary  alignments will be reported. So, if a read mapped to multiple loci with perfect match (or equal best score), then they all should be reported by default (within the limit of -g/--max-multihits). For example, when using "-g 100" and the read mapped to 40 positions with perfect match, then these 40 alignments are output in the SAM file. (If "-g 40" and the read mapped to 100 positions perfectly, then only 40 hits will be randomly output).<br /><br />However, if --report-secondary-alignments is on, Tophat will continue to find the secondary best alignments to get the 100 hits output, out of which 40 are called best/primary alignments. <br /><br />In either case above, the SAM file only has one hit without 0x100 FLAG (i.e. all of the rest have 0x100 SAM flag, they all are called "secondary alignment" by SAM specification). <br /><br />This is from discussion with Jessie. I will check to confirm. 

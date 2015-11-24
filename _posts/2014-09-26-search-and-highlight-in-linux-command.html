@@ -1,0 +1,15 @@
+---
+layout: post
+title: '"search and highlight" in linux command line'
+date: '2014-09-26T14:27:00.000-04:00'
+author: Xianjun Dong
+tags:
+- grep
+- linux
+- unix
+modified_time: '2014-09-26T14:27:57.784-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-3713001646946335263
+blogger_orig_url: http://onetipperday.blogspot.com/2014/09/search-and-highlight-in-linux-command.html
+---
+
+Is there a way to display a text file in command line, but highlight the matches?<br /><br /> Actually there is a pretty neat tip from <a href="http://unix.stackexchange.com/questions/366/convince-grep-to-output-all-lines-not-just-those-with-matches">jacksonh</a>:<br /><pre style="border: 0px; margin-bottom: 10px; max-height: 600px; overflow: auto; padding: 5px; vertical-align: baseline; width: auto; word-wrap: normal;"><code style="background-color: #eeeeee; border: 0px; color: #222222; font-family: Consolas, Menlo, Monaco, 'Lucida Console', 'Liberation Mono', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', 'Courier New', monospace, serif; font-size: 13px; line-height: 20px; margin: 0px; padding: 0px; vertical-align: baseline; white-space: inherit;">grep --color -E "test|$" yourfile</code><br /></pre>What we're doing here is matching against the $ pattern and the test pattern, obviously $doesn't have anything to colourize so only the test pattern gets color. The -E just turns on extended regex matching.

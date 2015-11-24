@@ -1,0 +1,15 @@
+---
+layout: post
+title: How to import functions in a bash script?
+date: '2012-08-28T23:36:00.000-04:00'
+author: Xianjun Dong
+tags:
+- import
+- linux
+- bash
+modified_time: '2012-08-28T23:36:16.191-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-8951827301929296314
+blogger_orig_url: http://onetipperday.blogspot.com/2012/08/how-to-import-functions-in-bash-script.html
+---
+
+I found this nice post in ubuntuforum.org: http://ubuntuforums.org/showthread.php?t=664657<br /><br /><br /><div class="smallfont" style="background-color: #f7f6f5; font-family: Ubuntu, Ubuntu, 'Ubuntu Beta', UbuntuBeta, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px; margin-top: 2px;"><strong>Re: $bash - how to import functions in a file</strong></div><hr size="1" style="background-color: #f7f6f5; color: #f7f6f5; font-family: Ubuntu, Ubuntu, 'Ubuntu Beta', UbuntuBeta, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px;" /><div class="vbclean_msgtext" id="post_message_8994582" style="background-color: #f7f6f5; font-family: Ubuntu, Ubuntu, 'Ubuntu Beta', UbuntuBeta, 'Bitstream Vera Sans', 'DejaVu Sans', Tahoma, HelveticaNeue-Light, 'Helvetica Neue Light', 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 13px;">you can create a file of frequently used variable, functions, etc in a ".cfg" file and then at the top of your script include one of these lines... they all do the same thing!<br /><div style="margin: 5px 20px 20px;"><div class="smallfont" style="margin-bottom: 2px; margin-top: 2px;">Code:</div><pre class="alt2" dir="ltr" style="border: 1px inset; height: 34px; overflow: auto; padding: 6px; width: 640px;">. $HOME/prefs.cfg</pre></div><div style="margin: 5px 20px 20px;"><div class="smallfont" style="margin-bottom: 2px; margin-top: 2px;">Code:</div><pre class="alt2" dir="ltr" style="border: 1px inset; height: 34px; overflow: auto; padding: 6px; width: 640px;">$include $HOME/prefs.cfg</pre></div><div style="margin: 5px 20px 20px;"><div class="smallfont" style="margin-bottom: 2px; margin-top: 2px;">Code:</div><pre class="alt2" dir="ltr" style="border: 1px inset; height: 34px; overflow: auto; padding: 6px; width: 640px;">source $HOME/prefs.cfg</pre></div>I found this solution in the "Bash Cookbook" (Albing, Vossen, &amp; Newham)...every bash scripter should have a copy of this book within each reach!</div>

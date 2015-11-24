@@ -1,0 +1,15 @@
+---
+layout: post
+title: How to redirect output to a file as well as display it out?
+date: '2008-09-09T17:45:00.000-04:00'
+author: Xianjun
+tags:
+- linux
+- redirect
+- tee
+modified_time: '2013-07-29T17:41:10.093-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-6038665054745107338
+blogger_orig_url: http://onetipperday.blogspot.com/2008/09/how-to-redirect-output-to-file-as-well.html
+---
+
+<div>Credit of the following content to:&nbsp;http://linux.byexamples.com/archives/349/how-to-redirect-output-to-a-file-as-well-as-display-it-out/</div><div><br /></div>To redirect standard output to a file is easy, you just need to use the redirection symbol, for example:<div><span style="font-family: Courier New, Courier, monospace;">echo "hello world" &gt; test.txt</span><br /><br />But what if I want to display it out as well as store into a file?&nbsp;Answer: tee<div><span style="font-family: Courier New, Courier, monospace;">echo "hello world" | tee test.txt</span><br /><br />Okay it seems very easy, how about append?<br /></div><div>To append the standard output to a file, you do this:</div><div><span style="font-family: Courier New, Courier, monospace;">echo"hello world" &gt;&gt; test.txt</span><br /><br />Append to file and display it out as well?</div><div><span style="font-family: Courier New, Courier, monospace;">echo"hello world" | tee -a test.txt</span><br /><br />Okay, how about dealing with standard output(stdout) and standard error(stderr)?<br />There are two different output stream, one is stdout and another one is stderr. Normal print usually goes to stdout and error related message will goes to stderr. Lets make a simple python script to print 1 line to stdout and 1 line to stderr.</div><div><br /></div><div><span style="font-family: Courier New, Courier, monospace;">#!/usr/bin/env python&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">import sys&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">sys.stdout.write("I am stdout\n")&nbsp;</span></div><div><span style="font-family: Courier New, Courier, monospace;">sys.stderr.write("I am stderr\n") </span><br /><br />Ok, lets save the python script as sout.py and try to redirect the output to a file.</div><div><span style="font-family: Courier New, Courier, monospace;">$ ./sout.py &gt; test.txt I am stderr </span><br /><br />Standard output is redirect to test.txt but stderr is print out.<br /><br />What if I want stderr to be redirect and display the stdout?&nbsp;</div><div><span style="font-family: Courier New, Courier, monospace;">./sout.py 2&gt; test.txt</span><br /><br />I want both stored into the file.</div><div><span style="font-family: Courier New, Courier, monospace;">./sout.py 2&amp;&gt; test.txt</span><br /><br />At last, I want both display and redirect to a file:&nbsp;</div><div><span style="font-family: Courier New, Courier, monospace;">./sout.py 2&gt;&amp;1 | tee test.txt</span><br /><br />Interesting isn’t it?</div></div>

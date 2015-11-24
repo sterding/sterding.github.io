@@ -1,0 +1,19 @@
+---
+layout: post
+title: scatter plot with density curve beside
+date: '2012-03-28T13:02:00.000-04:00'
+author: Xianjun Dong
+tags:
+- label the points
+- density plot
+- barplot
+- density curve
+- histogram
+- scatterplot
+modified_time: '2012-03-28T13:02:15.955-04:00'
+thumbnail: http://4.bp.blogspot.com/-qen-IPDIsV0/T3ND299U6UI/AAAAAAAAAGA/2J24uBIBFeU/s72-c/cp1w.all.bestbin.lm__allMarks.vs.withoutRepressiveMarks.png
+blogger_id: tag:blogger.com,1999:blog-12445049.post-7800228133559833155
+blogger_orig_url: http://onetipperday.blogspot.com/2012/03/scatter-plot-with-density-curve-beside.html
+---
+
+<br /><div class="separator" style="clear: both; text-align: center;"><a href="http://4.bp.blogspot.com/-qen-IPDIsV0/T3ND299U6UI/AAAAAAAAAGA/2J24uBIBFeU/s1600/cp1w.all.bestbin.lm__allMarks.vs.withoutRepressiveMarks.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" src="http://4.bp.blogspot.com/-qen-IPDIsV0/T3ND299U6UI/AAAAAAAAAGA/2J24uBIBFeU/s1600/cp1w.all.bestbin.lm__allMarks.vs.withoutRepressiveMarks.png" /></a></div><br />def.par &lt;- par(no.readonly = TRUE) # save default, for resetting...<br />xhist &lt;- hist(d1, plot=FALSE)<br />yhist &lt;- hist(d2, breaks=800, freq=F, plot=FALSE)<br />top &lt;- max(c(xhist$counts, yhist$counts))<br />nf &lt;- layout(matrix(c(2,0,1,3),2,2,byrow=TRUE), c(5,1), c(1,5), TRUE)<br />#layout.show(nf)<br /><br />par(mar=c(4,4,1,1))<br />plot(d1, d2, xlab="d1 = log2(prediction_m1) - log2(observation)", ylab="d2 = log2(prediction_m2) - log2(observation)", col="#0000ff22", pch=16, cex=1.5, type='n')<br />abline(h=0,v=0, lty=2)<br />points(d1, d2, col="#0000ff22", pch=16, cex=1.5)<br />abline(a=DD,b=1, lty=2, col='red')<br />abline(a=-DD,b=1, lty=2, col='red')<br />library(calibrate)<br />textxy(d1[abs(d1-d2)&gt;DD],d2[abs(d1-d2)&gt;DD], as.character(m$gene_name[abs(d1-d2)&gt;DD]), dcol='red')<br />a=round(lm(d2[abs(d1-d2)&lt;DD]~d1[abs(d1-d2)&lt;DD])$coefficients[1],3)<br />b=round(lm(d2[abs(d1-d2)&lt;DD]~d1[abs(d1-d2)&lt;DD])$coefficients[2],3)<br />abline(a=a,b=b, lty=1, col='red')<br />legend("topleft", c(paste("d2 = ",b,"*d1 ",ifelse(a&gt;0,'+',''),a,sep=""),"m1: full model","m2: model without repressive marks"), bty='n')<br /><br />par(mar=c(0,4,1,1))<br />hist(d1, breaks=800, freq=F, col='#0000ff22', border='#0000ff22', axes=FALSE, ylab="", xlab="",main="H1 cell line")<br />lines(density(d1, bw=1), col="black")<br />#barplot(xhist$counts, axes=FALSE, ylim=c(0, top), space=0, main="H1 cell line")<br />par(mar=c(4,0,1,1))<br />barplot(yhist$density, axes=FALSE, space=0, horiz=TRUE, col='#0000ff22', border='#0000ff22',)<br />#hist(d2, breaks=800, freq=F, col='#0000ff22', border='#0000ff22', axes=FALSE, ylab="", xlab="",main="")<br />lines(density(d2, bw=1)$y, y=seq(1,length(yhist$density), length.out=length(density(d2, bw=1)$y)),col="black")<br /><br />par(def.par)<br />

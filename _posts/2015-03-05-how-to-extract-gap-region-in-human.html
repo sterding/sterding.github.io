@@ -1,0 +1,15 @@
+---
+layout: post
+title: How to extract the gap region in human genome?
+date: '2015-03-05T14:30:00.001-05:00'
+author: Xianjun Dong
+tags:
+- human genome
+- UCSC
+- gap
+modified_time: '2015-05-07T16:41:06.242-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-7360145277792172106
+blogger_orig_url: http://onetipperday.blogspot.com/2015/03/how-to-extract-gap-region-in-human.html
+---
+
+Just notice that I should avoid the gap region, esp. when we generate a random background as your null distribution using tools such as <a href="http://bedtools.readthedocs.org/en/latest/content/tools/shuffle.html">bedtools shuffle</a>.<br /><br />Short answer: go below UCSC Table Browser link and choose to save as a bed file<br />&nbsp;<a href="http://genome.ucsc.edu/cgi-bin/hgTables?clade=mammal&amp;org=Human&amp;db=hg19&amp;hgta_group=allTables&amp;hgta_track=hg19&amp;hgta_table=gap&amp;hgta_regionType=genome&amp;hgta_outputType=primaryTable">http://genome.ucsc.edu/cgi-bin/hgTables?clade=mammal&amp;org=Human&amp;db=hg19&amp;hgta_group=allTables&amp;hgta_track=hg19&amp;hgta_table=gap&amp;hgta_regionType=genome&amp;hgta_outputType=primaryTable</a><br /><br />As below table shown, 8.28% of hg19 assembly are simply gap.<br /><br /><div class="subheadingBar" style="background-color: #d9e4f8; font-family: Arial, Helvetica, sans-serif; font-size: 1.1em; font-weight: bold; padding-top: 2px; text-indent: 10px; vertical-align: bottom; white-space: nowrap;"><div class="windowSize" id="sectTtl">Gap (gap) Summary Statistics</div></div><table bgcolor="#FFFEE8" cellpadding="0" style="border: 0px; color: black; font-family: Arial, Helvetica, sans-serif; width: 100%px;"><tbody><tr><th height="10"></th></tr><tr><td width="10"></td><td><table bgcolor="#888888" border="0" cellpadding="1" cellspacing="0" style="border: 0px;"><tbody><tr><td><table bgcolor="#FFFEE8" border="1" cellspacing="0" style="border: 0px;"><tbody><tr><td>item count</td><td align="RIGHT">457</td></tr><tr><td>item bases</td><td align="RIGHT">239,845,127 (8.28%)</td></tr><tr><td>item total</td><td align="RIGHT">239,845,127 (8.28%)</td></tr><tr><td>smallest item</td><td align="RIGHT">47</td></tr><tr><td>average item</td><td align="RIGHT">524,825</td></tr><tr><td>biggest item</td><td align="RIGHT">30,000,000</td></tr></tbody></table></td></tr></tbody></table></td></tr></tbody></table><br />

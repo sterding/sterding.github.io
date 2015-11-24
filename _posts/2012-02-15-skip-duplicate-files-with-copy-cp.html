@@ -1,0 +1,14 @@
+---
+layout: post
+title: Skip duplicate files with copy (cp)
+date: '2012-02-15T15:04:00.000-05:00'
+author: Xianjun Dong
+tags:
+- cp
+- rsync
+modified_time: '2012-02-22T11:50:42.285-05:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-5120680641025081426
+blogger_orig_url: http://onetipperday.blogspot.com/2012/02/skip-duplicate-files-with-copy-cp.html
+---
+
+<a href="http://www.linuxforums.org/forum/gentoo-linux/113099-skip-duplicate-files-copy-cp.html">Skip duplicate files with copy (cp)</a>: "This isn't as elegant as I think you are looking for, but could you use the update flag?<br /><br />cp -u<br /><br />--update<br />copy only when the SOURCE file is newer than the destination<br />file or when the destination file is missing<br /><br /><br />You would have to be a bit careful just because it just looks at the timestamp, but will at least you won't have to sit in front of the terminal and babysit the copy.<br /><br /><br />----<br /><br />I also found this but have never used it. However, it may be what you are looking for.<br /><br />`--reply=HOW'<br />*Deprecated: to be removed in 2008.*<br />Using `--reply=yes' makes `cp' act as if `yes' were given as a<br />response to every prompt about a destination file. That<br />effectively cancels any preceding `--interactive' or `-i' option.<br />Specify `--reply=no' to make `cp' act as if `no' were given as a<br />response to every prompt about a destination file. Specify<br />`--reply=query' to make `cp' prompt the user about each existing<br />destination file.<br /><br /><br />What you would do (I think) is do cp -i --reply=no<br /><br />That way, it will ask if you want to overwrite the file and automatically say "no." Check your version and give it a test run as this option will be removed very soon!"<br /><br />Another solution is to use <br /><div><i>rysnc --ingore-existing</i><br /><a href="https://chrome.google.com/webstore/detail/pengoopmcjnbflcjbmoeodbmoflcgjlk" style="font-size: 13px;">'via Blog this'</a></div>

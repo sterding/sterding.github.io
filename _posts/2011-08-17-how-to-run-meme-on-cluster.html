@@ -1,0 +1,28 @@
+---
+layout: post
+title: How to run Meme on cluster
+date: '2011-08-17T12:23:00.000-04:00'
+author: Xianjun
+tags:
+- bioinformatics
+- meme
+modified_time: '2011-08-19T14:43:14.549-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-3009185097034127335
+blogger_orig_url: http://onetipperday.blogspot.com/2011/08/how-to-run-meme-on-cluster.html
+---
+
+<div dir="ltr" style="text-align: left;" trbidi="on"><div dir="ltr" style="text-align: left;" trbidi="on"><span class="Apple-style-span" style="background-color: white; font-family: Arial, Helvetica, sans-serif; font-size: 14px;"></span><br /><div class="heading" style="border-bottom-color: silver; border-bottom-style: solid; border-bottom-width: 1px; font-size: 22px; font-weight: bold;"><span class="Apple-style-span" style="color: red; font-size: small; font-weight: normal;">The latest version of Meme, v4.6.1, was built with mpich, while the earlier versions were built with openmpi. You need to set the path correctly as in the examples below.</span></div>Your input database should consist of a file containing sequences in fasta format. In the example below, the file is 'mini-drosoph.s'.<br /><b>Maxsize parameter:</b>&nbsp;The maximum dataset size in characters. Determine the number of characters in your dataset by typing 'wc -c filename'. e.g.<br /><div class="term" style="background-color: #e6e9fa; border-bottom-color: silver; border-bottom-style: dashed; border-bottom-width: 1px; border-left-color: silver; border-left-style: dashed; border-left-width: 1px; border-right-color: silver; border-right-style: dashed; border-right-width: 1px; border-top-color: silver; border-top-style: dashed; border-top-width: 1px; font-family: monospace; font-size: 12px; margin-left: 2em; margin-right: 2em; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px;"><pre style="white-space: pre-wrap; word-wrap: break-word;">[user@biowulf mydir]$ wc -c mini-drosoph.s 
+<br />506016 mini-drosoph.s
+<br /></pre></div>For this dataset, the maxsize parameter has to be set to greater than 506,016, so we will use 600000.Set up a batch script along the lines of the ones below:<br /><h3>Batch script for Meme 4.6.1</h3><div class="term" style="background-color: #e6e9fa; border-bottom-color: silver; border-bottom-style: dashed; border-bottom-width: 1px; border-left-color: silver; border-left-style: dashed; border-left-width: 1px; border-right-color: silver; border-right-style: dashed; border-right-width: 1px; border-top-color: silver; border-top-style: dashed; border-top-width: 1px; font-family: monospace; font-size: 12px; margin-left: 2em; margin-right: 2em; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px;"><pre style="white-space: pre-wrap; word-wrap: break-word;">----  this file is called meme.batch ---------
+<br />#!/bin/bash
+<br />#This batch script can be used with Meme 4.6.1
+<br />#PBS -N Meme
+<br />#PBS -m be
+<br />#PBS -j oe
+<br />
+<br />export PATH=/usr/local/mpich-1.2.7p1-gcc4_64/bin:$PATH
+<br />cd /data/user/meme/
+<br />time mpirun -machinefile $PBS_NODEFILE -np $np /usr/local/meme_4.6.1/bin/meme_p \
+<br />     /data/user/meme/test.fa -oc /data/user/meme/meme_out \
+<br />     -maxsize 10000000 -p $np
+<br /></pre><div><br /></div></div><br />// The above tips are from&nbsp;http://biowulf.nih.gov/apps/meme.html</div><br />btw, the above script use PBS (Portable Batch System) submission system. Alternatively, there are other options, like LoadLeveler (Champion), LSF (Lonestar). There are syntax comparison <a href="http://services.tacc.utexas.edu/index.php/batch-systems-comparison">here</a>. Also, more detail for SGE and PBS <a href="http://wiki.ibest.uidaho.edu/index.php/Tutorials:_SGE_PBS_Converting">here</a>.&nbsp;</div>

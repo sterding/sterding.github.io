@@ -1,0 +1,15 @@
+---
+layout: post
+title: bubble plot in R
+date: '2012-07-18T13:56:00.001-04:00'
+author: Xianjun Dong
+tags:
+- R
+- bubble plot
+modified_time: '2012-07-18T13:56:28.114-04:00'
+thumbnail: http://2.bp.blogspot.com/-jI4Np0oubDw/UAb3jCTs70I/AAAAAAAAATY/59UPVM4ZrII/s72-c/intronSize_log.png
+blogger_id: tag:blogger.com,1999:blog-12445049.post-7393666520601703540
+blogger_orig_url: http://onetipperday.blogspot.com/2012/07/bubble-plot-in-r.html
+---
+
+<div class="separator" style="clear: both; text-align: center;"><a href="http://2.bp.blogspot.com/-jI4Np0oubDw/UAb3jCTs70I/AAAAAAAAATY/59UPVM4ZrII/s1600/intronSize_log.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="480" src="http://2.bp.blogspot.com/-jI4Np0oubDw/UAb3jCTs70I/AAAAAAAAATY/59UPVM4ZrII/s640/intronSize_log.png" width="640" /></a></div><div class="separator" style="clear: both; text-align: center;"><br /></div><div class="separator" style="clear: both; text-align: left;">Motived by the post from FlowingData(http://flowingdata.com/2010/11/23/how-to-make-bubble-charts/), I made this plot with R code below:</div><div class="separator" style="clear: both; text-align: left;"></div><blockquote class="tr_bq"><span style="font-family: 'Courier New', Courier, monospace;">par(mfrow=c(3,1), mar=c(4,6,4,4))<br />for(ty in c("protein_coding","lincRNA","piRNA")){<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;res1=subset(res,type==ty &amp; readsCount&gt;10 &amp; speciesCount&gt;8)<br />&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;symbols(log(res1$length), res1$speciesCount, circles=sqrt(res1$readsCount/ pi ), inches=0.35, fg="white", bg="red", cex.lab=2, cex.main=2, cex.axis=2, xlab="intron size (log(bp))", ylab="species count", main=ty, xlim=range(log(res$length))) &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;<br />}</span></blockquote><div class="separator" style="clear: both;">I will continue to adapt code for legend from this article (<a href="http://www.jstatsoft.org/v15/i05/paper">http://www.jstatsoft.org/v15/i05/paper</a>).</div>

@@ -1,0 +1,17 @@
+---
+layout: post
+title: A parallel and fast way to download multiple files
+date: '2015-10-05T13:06:00.000-04:00'
+author: Xianjun Dong
+tags:
+- download in batch
+- Roadmap
+- parallel
+- axel
+- unix
+modified_time: '2015-10-05T13:58:07.855-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-7735282730143445083
+blogger_orig_url: http://onetipperday.blogspot.com/2015/10/a-parallel-and-fast-way-to-download.html
+---
+
+We can write a short script to download multiple files easily in command, e..g<br /><br /><span style="font-family: Courier New, Courier, monospace;">for i in X Y Z; do wget http://www.site.com/folder/$i.url; done</span><br /><br />If we want them to run in background (so that in a pseudo-parallel way), we can use -b option for wget.<br /><br />But this is still not fast enough, and the parallel with wget -b won't give me any notice once it's done.<br /><br />Here is my solution: <span style="font-family: Courier New, Courier, monospace;">axel&nbsp;+ parallel</span><br /><br /><span style="background-color: yellow; font-family: Courier New, Courier, monospace;">parallel -a urls.file axel</span><br /><br />Let's say I want to download all brain sample bigwig files of H3K4me1 marks from the Roadmap Epigenomics project. Here is the code:<br /><br /><span style="font-family: Courier New, Courier, monospace;">mark=H3K4me1</span><br /><span style="font-family: Courier New, Courier, monospace;">&gt; url.$mark # to generate an empty file</span><br /><span style="font-family: Courier New, Courier, monospace;">for i in E071 E074 E068 E069 E072 E067 E073 E070 E082 E081;</span><br /><span style="font-family: Courier New, Courier, monospace;">do&nbsp;</span><br /><span style="font-family: Courier New, Courier, monospace;">&nbsp; echo http://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/pval/$i-$mark.pval.signal.bigwig &gt;&gt; url.$mark</span><br /><span style="font-family: Courier New, Courier, monospace;">done</span><br /><span style="font-family: Courier New, Courier, monospace;">parallel -a url.$mark axel -n 5&nbsp;</span><br /><span style="font-family: Courier New, Courier, monospace;"><br /></span>Regarding what's axel and how fast it is comparing to wget, please refer to this link: <a href="http://www.cyberciti.biz/tips/download-accelerator-for-linux-command-line-tools.html">http://www.cyberciti.biz/tips/download-accelerator-for-linux-command-line-tools.html</a>

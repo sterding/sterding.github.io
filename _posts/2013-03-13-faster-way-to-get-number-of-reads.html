@@ -1,0 +1,18 @@
+---
+layout: post
+title: faster way to get number of reads species
+date: '2013-03-13T14:13:00.000-04:00'
+author: Xianjun Dong
+tags:
+- hash
+- linux
+- awk
+- perl
+- sorting
+- RNAseq
+modified_time: '2013-03-16T11:46:16.402-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-8530493735863949802
+blogger_orig_url: http://onetipperday.blogspot.com/2013/03/faster-way-to-get-number-of-reads.html
+---
+
+Let's call the unique reads sequences as 'species' in this topic. &nbsp;So, an easy way to get the number of reads species for a RNAseq (for example) sam file can be<br /><br /><span style="font-family: Courier New, Courier, monospace;">cut -f10 alignment.sam | sort -u | wc -l</span><br /><br />But it's not the faster one if the sam file is large. We can improve it by not sorting it (which is unnecessary for this task). Here is it:<br /><br /><span style="font-family: Courier New, Courier, monospace;">cut -f10 alignment.sam | awk '{r[$1]++;}END{for(i in r)j++; print "number of species:", j;}'</span><br />or<br /><div><span style="font-family: Courier New, Courier, monospace;">awk '{r[$10]++;}END{for(i in r)j++; print "number of species:", j;}' alignment.sam</span><br /><br />The point is, you don't really need to "sort" the key, but instead to "group" the lines by the key. For example, when using groupBy in bedtools, it requires the input is pre-sorted by the key which is to be grouped. To do that in a quick way (esp. important for large file), we can use <a href="http://stackoverflow.com/questions/10758564/is-it-possible-to-append-an-item-to-an-array-in-awk-without-specifying-an-index">array of array for awk</a>&nbsp;or <a href="http://perldoc.perl.org/perldsc.html#Declaration-of-a-HASH-OF-ARRAYS">hash of array in perl</a>. Here is the hash of array solution in perl for "sort -k10" of a large file:<br /><br /><span style="font-family: Courier New, Courier, monospace;">perl -e 'while (&lt;&gt;) {$l=$_; @a=split("\t", $l); push(@{$HoA{$a[17]}}, $l);}{foreach $i (sort keys %HoA) {print join("", @{$HoA{$i}});}}'</span><br /><br />btw, I found this awk array of array does not work:<br /><br /><span style="font-family: Courier New, Courier, monospace;">awk '{r[$10][length(r[$10])+1]=$0;}END{for(i in r) for (j in r[i]) print r[i][j];}' alignment.sam</span></div>

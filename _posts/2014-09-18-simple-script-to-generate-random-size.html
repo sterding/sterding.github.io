@@ -1,0 +1,16 @@
+---
+layout: post
+title: Simple script to generate random size-matched background regions
+date: '2014-09-18T11:05:00.004-04:00'
+author: Xianjun Dong
+tags:
+- background regions
+- randomize
+- bedtools
+- bash
+modified_time: '2014-09-18T11:06:31.654-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-747597916889313477
+blogger_orig_url: http://onetipperday.blogspot.com/2014/09/simple-script-to-generate-random-size.html
+---
+
+Here is a simple script I wrote for generating a random background regions with matched size distribution, using <span style="font-family: Courier New, Courier, monospace;">bedtools random</span> and a input.bed as background. Not fancy, but works!<br /><div><br /><pre style="background-color: whitesmoke; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border-top-left-radius: 4px; border-top-right-radius: 4px; border: 1px solid rgb(204, 204, 204); box-sizing: border-box; color: #333333; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: 13px; line-height: 18.571430206298828px; margin-bottom: 10px; overflow: auto; padding: 9.5px; white-space: pre-wrap; word-break: break-all; word-wrap: break-word;"><code style="background-color: transparent; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; border-top-left-radius: 0px; border-top-right-radius: 0px; box-sizing: border-box; color: inherit; font-family: Menlo, Monaco, Consolas, 'Courier New', monospace; font-size: inherit; padding: 0px;"># ===============================================================<br /># Script to generate a random size-matched background regions <br /># Author: Xianjun<br /># Date: Jun 3, 2014<br /># Usage:<br /># toGenerateRandomRegions.sh input.bed &gt; output.random.bed<br /># or<br /># cat input.bed | toGenerateRandomRegions.sh -<br /># ===============================================================</code><br /><br />bedfile=$1<br /># other possible options can be the genome (e.g. hg19, mm9 etc.) or an inclusion or exclusion regions (e.g. exons)<br /><br /># download hg.genome<br />mysql --user=genome --host=genome-mysql.cse.ucsc.edu -A -e "select chrom, size from hg19.chromInfo"  &gt; hg19.genome<br /><br />cat $bedfile | while read chr start end rest<br />do<br />    let l=$end-$start;<br />    bedtools random -g hg19.genome -n 1 -l $l<br />done</pre></div>

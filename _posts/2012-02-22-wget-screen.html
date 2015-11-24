@@ -1,0 +1,16 @@
+---
+layout: post
+title: wget,  screen
+date: '2012-02-22T11:49:00.002-05:00'
+author: Xianjun Dong
+tags:
+- screen
+- download in batch
+- wget
+- ftp
+modified_time: '2012-08-23T12:57:53.996-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-6587551948189961645
+blogger_orig_url: http://onetipperday.blogspot.com/2012/02/wget-screen.html
+---
+
+<br /><ul><li><b>How to download all (specific) files from a remote server?</b></li></ul><div><i>wget -r -l1 -nH ftp://usename:pass@ftp.domain.name/folder/ -P mydownload</i></div><div><i><br /></i></div><div>-r recursive&nbsp;</div><div>-lNUMBER maxima recursion depth for downloading, e.g -l1 is for current folder</div><div>-nH&nbsp;&nbsp;--no-host-directories &nbsp; &nbsp; &nbsp; don't create host directories.</div><div>-P, &nbsp;--directory-prefix=PREFIX &nbsp; save files to PREFIX/...<br /><br />Or, you can use -m (mirror,&nbsp;shortcut for -N -r -l inf --no-remove-listing) -nH to download all</div><div><br /></div><div>You can also use -A to specify the file extension you want to include, e.g. -A jpg is to download all jpg files.<br /><br />Good reference for wget:<br />http://www.linuxquestions.org/questions/linux-networking-3/use-wget-to-download-multiple-files-with-wildcards-603486/<br />and might be useful:<br />http://www.linuxquestions.org/questions/red-hat-31/i-want-to-download-ftp-site-files-via-wget-and-socks5-proxy-server-247167/</div><ul><li><b>How to use screen to manage multiple session?</b></li></ul><div>type "screen" or "Ctrl-a, c" to create a new window</div><div>Ctrl-a, n &nbsp; next window</div><div>Ctrl-a, p &nbsp; previous window</div><div>Ctrl-a, k &nbsp; kill window</div><div>Ctrl-a, ? &nbsp; help</div><div><br />Very good tutorial for the screen command:&nbsp;http://www.rackaid.com/resources/linux-screen-tutorial-and-how-to/</div>

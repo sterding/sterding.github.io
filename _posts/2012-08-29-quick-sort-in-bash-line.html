@@ -1,0 +1,16 @@
+---
+layout: post
+title: quick sort in bash line
+date: '2012-08-29T15:00:00.002-04:00'
+author: Xianjun Dong
+tags:
+- sort
+- linux
+- sorting
+- algorithm
+modified_time: '2012-08-29T15:01:28.556-04:00'
+blogger_id: tag:blogger.com,1999:blog-12445049.post-3312790259447978401
+blogger_orig_url: http://onetipperday.blogspot.com/2012/08/quick-sort-in-bash-line.html
+---
+
+There are&nbsp;varieties&nbsp;of sorting algorithms (see wiki for details: http://en.wikipedia.org/wiki/Sorting_algorithm). The time complexity for the quick ones are like nlog(n).<br /><br />In unix, we usually use the 'sort' command to sort input. I cannot find direct info for the computational complexity of unix sort command, but definitely it shows quick slow esp. when the dataset is large.<br /><br />Here are several feasible solutions for quick sorting I googled:<br /><br /><b>1. "split &amp; merge"&nbsp;<a href="http://arnab.org/blog/quick-and-easy-multicore-sort">http://arnab.org/blog/quick-and-easy-multicore-sort</a></b><br /><br /><code style="background-color: white; color: #222222; font-size: 12px; line-height: 21.600000381469727px;">split -l5000000 data.tsv '_tmp';<br />ls -1 _tmp* | while read FILE; do sort $FILE -o $FILE &amp; done;</code><br /><span style="background-color: white; color: #222222; font-family: Verdana, Helvetica, sans-serif; font-size: 12px; line-height: 21.600000381469727px;">Followed by:</span><br /><code style="background-color: white; color: #222222; font-size: 12px; line-height: 21.600000381469727px;">sort -m _tmp* -o data.tsv.sorted</code><br /><br /><b><i>arnab</i></b> suggested to split the large file into small pieces and sort them individually, then use 'sort -m' to merge them. I've tried it, works very well, at least the "sort -m" is worthy to try. (Note: -merge is actually sort instead of merge. Here is what 'info sort' says:<br /><br />`--merge'<br />Merge the given files by sorting them as a group.  Each input file<br />must always be individually sorted.  It always works to sort<br />instead of merge; merging is provided because it is faster, in the<br />case where it works.<br /><div><br /></div><div><b>2. "quicksort"&nbsp;<a href="http://www.bashguru.com/2011/01/quicksort-shell-script.html">http://www.bashguru.com/2011/01/quicksort-shell-script.html</a></b></div><div><br /></div><div>This is another implementation for quicksort in bash. I've not tested it yet.</div><div><br /></div><div>3. BSD seems already have lib for other quick sorting algorithms:</div><div><a href="http://www.unix.com/man-page/freebsd/3/qsort/">http://www.unix.com/man-page/freebsd/3/qsort/</a></div>
